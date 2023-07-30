@@ -26,7 +26,10 @@ export const swaApi = createApi({
         }
       },
     }),
+    getSearch: builder.query<Data, { type: string | null; keyword: string }>({
+      query: ({ type, keyword }) => `${type}?search=${keyword}`,
+    }),
   }),
 });
 
-export const { useGetTypeQuery } = swaApi;
+export const { useGetTypeQuery, useGetSearchQuery } = swaApi;

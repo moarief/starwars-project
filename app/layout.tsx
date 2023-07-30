@@ -6,6 +6,7 @@ import Providers from "./provider";
 
 import type { Metadata } from "next";
 import { Navigation } from "@/components/navigation";
+import { Search } from "@/components/search";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -24,8 +25,9 @@ export default function RootLayout({
         <Providers>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <nav className="flex w-full h-20 border-b">
-              <div className="max-w-6xl w-full flex flex-wrap items-center justify-between mx-auto p-4">
+              <div className="max-w-6xl w-full flex flex-wrap items-center justify-between mx-auto py-4">
                 <Navigation />
+                <Search />
               </div>
             </nav>
             {children}

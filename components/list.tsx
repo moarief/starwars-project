@@ -43,7 +43,7 @@ export const List = ({ category }: List) => {
   const maxPageNumber = Math.ceil(totalAmount / 10).toString();
 
   return (
-    <div className="flex w-full flex-col">
+    <div className="flex w-full flex-col mb-20">
       <ListItem
         title={title}
         total={totalAmount}
@@ -55,7 +55,7 @@ export const List = ({ category }: List) => {
       {totalAmount >= 10 ? (
         <div className="flex justify-center gap-5 mt-9">
           <Button
-            disabled={pageNumber == null || pageNumber === "1"}
+            disabled={data?.previous == null}
             onClick={() => handlePageNumber(data?.previous)}
             type="submit"
             variant={"default"}
@@ -63,7 +63,7 @@ export const List = ({ category }: List) => {
             Previous
           </Button>
           <Button
-            disabled={pageNumber ? pageNumber === maxPageNumber : false}
+            disabled={data?.next == null}
             onClick={() => handlePageNumber(data?.next)}
             type="submit"
             variant={"default"}

@@ -4,7 +4,6 @@ import { ItemCard } from "./itemCard";
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 
-
 type ListItem = {
   title: string;
   total: number;
@@ -35,7 +34,7 @@ export const ListItem = ({
               {total ? total : null} {title}
             </span>
           </h2>
-          <div className="flex flex-wrap gap-10">
+          <div className="flex flex-wrap justify-between gap-y-5">
             {data &&
               data.results.map((item: Film | Person | Specie) => {
                 if ("name" in item) {
