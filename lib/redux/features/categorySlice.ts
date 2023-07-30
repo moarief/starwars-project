@@ -13,14 +13,14 @@ export const category = createSlice({
   initialState,
   reducers: {
     reset: () => initialState,
-    update: (state, action: PayloadAction<string>) => {
+    updateCategory: (state, action: PayloadAction<string>) => {
       state.value = action.payload;
     },
   },
 });
 
 export const {
-  update,
+  updateCategory,
   reset,
 } = category.actions;
 export default category.reducer;

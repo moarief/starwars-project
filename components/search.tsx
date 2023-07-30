@@ -23,6 +23,8 @@ import {
   SelectItem,
 } from "./ui/select";
 import { DataTypeObject, SWADataTypes } from "@/lib/types";
+import { useAppDispatch } from "@/lib/redux/hooks";
+import { updateCategory } from "@/lib/redux/features/categorySlice";
 
 const FormSchema = z.object({
   keyword: z.string({ description: "" }).min(2, {
@@ -32,6 +34,7 @@ const FormSchema = z.object({
 });
 
 export function Search() {
+  const dispatch = useAppDispatch();
   const route = useRouter();
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -43,6 +46,7 @@ export function Search() {
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
+    dispatch(updateCategory(""));
     route.push(`/${data.keyword}?type=${data.type}`);
   }
 

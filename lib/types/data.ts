@@ -16,7 +16,7 @@ export type DataTypes = z.infer<typeof DataTypeSchema>;
 export const SWADataTypes: DataTypes = [
   {
     id: "films",
-    title: "Film",
+    title: "Films",
   },
   {
     id: "people",

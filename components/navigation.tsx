@@ -1,13 +1,15 @@
 "use client";
 import { Button } from "./ui/button";
 import Image from "next/image";
-import { update } from "@/lib/redux/features/categorySlice";
-import { useAppDispatch } from "@/lib/redux/hooks";
+import { updateCategory } from "@/lib/redux/features/categorySlice";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import { ModeToggle } from "./switcher";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { DataTypeObject, SWADataTypes } from "@/lib/types";
 
 export const Navigation = () => {
+  const category = useAppSelector((state) => state.categoryReducer.value);
   const dispatch = useAppDispatch();
   const route = useRouter();
 
@@ -28,31 +30,22 @@ export const Navigation = () => {
         />
       </Link>
 
-      <div className="flex gap-1">
-        <Button
-          onClick={() => {
-            handleRoute(), dispatch(update("films"));
-          }}
-          variant="ghost"
-        >
-          <span>Films</span>
-        </Button>
-        <Button
-          onClick={() => {
-            handleRoute(), dispatch(update("people"));
-          }}
-          variant="ghost"
-        >
-          <span>People</span>
-        </Button>
-        <Button
-          onClick={() => {
-            handleRoute(), dispatch(update("species"));
-          }}
-          variant="ghost"
-        >
-          <span>Species</span>
-        </Button>
+      <div className="flex gap-3">
+        {SWADataTypes.map((item: DataTypeObject) => {
+          const getSelected = () =>
+            category === item.id ? "default" : "ghost";
+          return (
+            <Button
+              key={item.id}
+              onClick={() => {
+                handleRoute(), dispatch(updateCategory(item.id));
+              }}
+              variant={getSelected()}
+            >
+              <span>{item.title}</span>
+            </Button>
+          );
+        })}
         <Button onClick={() => route.push("/favourite")} variant="ghost">
           <span>Favourites</span>
         </Button>
