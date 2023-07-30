@@ -12,7 +12,9 @@ const initQuery: TypeQuery = {
 };
 
 export const swaApi = createApi({
-  reducerPath: "userApi",
+  reducerPath: "swaApi",
+  // refetchOnFocus: true,
+  // keepUnusedDataFor: 30,
   baseQuery: fetchBaseQuery({
     baseUrl: "https://swapi.dev/api/",
   }),
@@ -29,7 +31,31 @@ export const swaApi = createApi({
     getSearch: builder.query<Data, { type: string | null; keyword: string }>({
       query: ({ type, keyword }) => `${type}?search=${keyword}`,
     }),
+    getFavorites: builder.query<Film[], string[]>({
+      async queryFn(favouriteUrls, _queryApi, _extraOptions, fetchWithBQ) {
+        const favoriteRequests = favouriteUrls.map((url) => fetchWithBQ(url));
+        const results = await Promise.all(favoriteRequests);
+        console.log("🚀 ~ file: swaApi.ts:42 ~ queryFn ~ results:", results);
+
+        const favorites: any = results.map((result) =>
+          result.data ? (result.data as Film) : []
+        );
+
+        const favouriteArray = results.map((result) => {
+          return result.data ? (result.data as Film) : [];
+        });
+        console.log(
+          "🚀 ~ file: swaApi.ts:48 ~ favouriteArray ~ favouriteArray:",
+          favouriteArray
+        );
+
+        // TODO: Does work correctly on the page, data is undefined.. no more time left..
+
+        return favorites;
+      },
+    }),
   }),
 });
 
-export const { useGetTypeQuery, useGetSearchQuery } = swaApi;
+export const { useGetTypeQuery, useGetSearchQuery, useGetFavoritesQuery } =
+  swaApi;

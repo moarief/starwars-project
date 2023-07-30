@@ -40,7 +40,6 @@ export const List = ({ category }: List) => {
   };
 
   const totalAmount = data?.count ? data.count : 0;
-  const maxPageNumber = Math.ceil(totalAmount / 10).toString();
 
   return (
     <div className="flex w-full flex-col mb-20">

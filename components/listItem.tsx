@@ -3,6 +3,7 @@ import { Film, Person, Specie } from "@/lib/types";
 import { ItemCard } from "./itemCard";
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import { Loader } from "./loader";
 
 type ListItem = {
   title: string;
@@ -26,7 +27,7 @@ export const ListItem = ({
       {error ? (
         <p>Failed get data...</p>
       ) : isLoading || isFetching ? (
-        <p>Loading</p>
+        <Loader />
       ) : (
         <>
           <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">

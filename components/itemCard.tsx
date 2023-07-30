@@ -8,6 +8,7 @@ import {
 import { Film } from "@/lib/types/film";
 import { Person } from "@/lib/types/person";
 import { Specie } from "@/lib/types/specie";
+import { Favourite } from "./favourite";
 
 type Props = Film | Person | Specie;
 
@@ -15,9 +16,12 @@ export const ItemCard = (item: Props) => {
   if ("title" in item) {
     const { title, episode_id, director, producer, release_date, url } = item;
     return (
-      <Card className="w-[350px]">
+      <Card className="w-[370px]">
         <CardHeader>
-          <CardTitle>{title}</CardTitle>
+          <CardTitle className="flex justify-between gap-2">
+            <span>{title}</span>
+            <Favourite url={url} />
+          </CardTitle>
           <CardDescription>{`Episode ${episode_id}`}</CardDescription>
         </CardHeader>
         <CardContent>
@@ -28,18 +32,25 @@ export const ItemCard = (item: Props) => {
       </Card>
     );
   } else if ("gender" in item) {
-    const { name, homeworld, gender, height, hair_color, films, url } = item;
+    const { name, gender, height, hair_color, films, url } = item;
     return (
       <Card className="w-[350px]">
         <CardHeader>
-          <CardTitle>{name}</CardTitle>
+          <CardTitle className="flex justify-between gap-2">
+            <span>{name}</span>
+            <Favourite url={url} />
+          </CardTitle>
           <CardDescription>
             <span>In episode </span>
             {films.map((item: string, index: number) => {
               const film = item.split("/");
               const filmNumber = film.at(film.length - 2);
               const isLastElement = index === films.length - 1;
-              return <span key={item}>{`${filmNumber}${isLastElement ? '' : ', '}`}</span>;
+              return (
+                <span key={item}>{`${filmNumber}${
+                  isLastElement ? "" : ", "
+                }`}</span>
+              );
             })}
           </CardDescription>
         </CardHeader>
@@ -51,13 +62,27 @@ export const ItemCard = (item: Props) => {
       </Card>
     );
   } else if ("classification" in item) {
-    const { name, homeworld, classification, designation, language, url } =
-      item;
+    const { name, classification, designation, language, url, films } = item;
     return (
       <Card className="w-[350px]">
         <CardHeader>
-          <CardTitle>{name}</CardTitle>
-          <CardDescription>{`Episode ${homeworld}`}</CardDescription>
+          <CardTitle className="flex justify-between gap-2">
+            <span>{name}</span>
+            <Favourite url={url} />
+          </CardTitle>
+          <CardDescription>
+            <span>In episode </span>
+            {films.map((item: string, index: number) => {
+              const film = item.split("/");
+              const filmNumber = film.at(film.length - 2);
+              const isLastElement = index === films.length - 1;
+              return (
+                <span key={item}>{`${filmNumber}${
+                  isLastElement ? "" : ", "
+                }`}</span>
+              );
+            })}
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <p>{`Classification: ${classification}`}</p>
