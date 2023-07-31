@@ -1,5 +1,12 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Data, Film } from "../types";
+import {
+  BaseQueryFn,
+  FetchArgs,
+  FetchBaseQueryError,
+  FetchBaseQueryMeta,
+  createApi,
+  fetchBaseQuery,
+} from "@reduxjs/toolkit/query/react";
+import { Data, Film, Person, Specie } from "../types";
 
 type TypeQuery = {
   id: string;
@@ -9,6 +16,16 @@ type TypeQuery = {
 const initQuery: TypeQuery = {
   id: "films",
   page: "",
+};
+
+type BatchData = {
+  results: (Film | Person | Specie)[];
+};
+
+type BaseQueryDataType = {
+  data: Film | Person | Specie;
+  error: FetchBaseQueryError | null;
+  meta: FetchBaseQueryMeta;
 };
 
 export const swaApi = createApi({
@@ -31,31 +48,31 @@ export const swaApi = createApi({
     getSearch: builder.query<Data, { type: string | null; keyword: string }>({
       query: ({ type, keyword }) => `${type}?search=${keyword}`,
     }),
-    getFavorites: builder.query<Film[], string[]>({
-      async queryFn(favouriteUrls, _queryApi, _extraOptions, fetchWithBQ) {
-        const favoriteRequests = favouriteUrls.map((url) => fetchWithBQ(url));
-        const results = await Promise.all(favoriteRequests);
-        console.log("🚀 ~ file: swaApi.ts:42 ~ queryFn ~ results:", results);
-
-        const favorites: any = results.map((result) =>
-          result.data ? (result.data as Film) : []
-        );
+    // Define an endpoint that takes an array of endpoints as an argument
+    batchFetch: builder.query({
+      // Use queryFn to write custom logic
+      queryFn: async (arg, _queryApi, _extraOptions, baseQuery) => {
+        // Assume arg is an array of endpoints, such as ['posts', 'users', 'comments']
+        // Create an array of promises for each endpoint
+        const promises = arg.map((endpoint: string) => baseQuery(endpoint));
+        // Wait for all promises to resolve
+        const results = await Promise.all(promises);
+        console.log("🚀 ~ file: swaApi.ts:47 ~ queryFn: ~ results:", results);
 
         const favouriteArray = results.map((result) => {
           return result.data ? (result.data as Film) : [];
         });
-        console.log(
-          "🚀 ~ file: swaApi.ts:48 ~ favouriteArray ~ favouriteArray:",
-          favouriteArray
-        );
 
-        // TODO: Does work correctly on the page, data is undefined.. no more time left..
-
-        return favorites;
+        // Return the results as an array
+        return {
+          data: {
+            results: favouriteArray,
+          },
+        };
       },
     }),
   }),
 });
 
-export const { useGetTypeQuery, useGetSearchQuery, useGetFavoritesQuery } =
+export const { useGetTypeQuery, useGetSearchQuery, useBatchFetchQuery } =
   swaApi;
