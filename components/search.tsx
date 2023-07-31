@@ -89,7 +89,7 @@ export function Search() {
                     className={clsx("w-auto", {
                       "border-red-500": form.formState.errors?.keyword,
                     })}
-                    placeholder="Search GitHub username"
+                    placeholder="Search keyword..."
                     {...field}
                     autoFocus
                   />
