@@ -11,7 +11,7 @@ Simple site to display the Star Wars API Films, People, Species :)
 5. All Cards specific content and a favourites button (Store)
 6. The favourties page is not finished - should display the stored favourites from store in a list (RTK Query + Store)
 
-## Used these features:
+## Toolkit used:
 
 1. React
 2. Nextjs
