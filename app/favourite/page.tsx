@@ -12,8 +12,6 @@ export default function Page() {
   const { isLoading, isFetching, data, error, isSuccess } =
     useBatchFetchQuery(favourites);
 
-  console.log("🚀 ~ file: page.tsx:14 ~ Page ~ data:", data);
-
   return (
     <main className="flex min-h-screen flex-col items-center justify-between pt-16">
       <div className="flex flex-col space-y-10 w-full max-w-6xl justify-between font-mono text-sm lg:flex">

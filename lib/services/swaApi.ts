@@ -31,7 +31,7 @@ type BaseQueryDataType = {
 export const swaApi = createApi({
   reducerPath: "swaApi",
   // refetchOnFocus: true,
-  // keepUnusedDataFor: 30,
+  keepUnusedDataFor: 10 * 60,
   baseQuery: fetchBaseQuery({
     baseUrl: "https://swapi.dev/api/",
   }),
@@ -57,7 +57,6 @@ export const swaApi = createApi({
         const promises = arg.map((endpoint: string) => baseQuery(endpoint));
         // Wait for all promises to resolve
         const results = await Promise.all(promises);
-        console.log("🚀 ~ file: swaApi.ts:47 ~ queryFn: ~ results:", results);
 
         const favouriteArray = results.map((result) => {
           return result.data ? (result.data as Film) : [];

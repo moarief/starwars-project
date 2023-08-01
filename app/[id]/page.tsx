@@ -10,13 +10,12 @@ export type PageProps = {
 
 export default function Page({ params }: PageProps) {
   const searchParams = useSearchParams();
-  const { id } = params;
   const type = searchParams.get("type");
+  const { id } = params;
 
   const query = { type: type, keyword: id };
 
   const { isLoading, isFetching, data, error } = useGetSearchQuery(query);
-  console.log("🚀 ~ file: page.tsx:19 ~ Page ~ data:", data);
 
   const searchResult = data?.results.length ? data?.results.length : 0;
 

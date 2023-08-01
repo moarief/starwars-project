@@ -1,21 +1,37 @@
-import { addToFavourite } from "@/lib/redux/features/favouriteSlice";
-import { useAppDispatch } from "@/lib/redux/hooks";
-import { HeartIcon } from "lucide-react";
+import {
+  addToFavourite,
+  removeFromFavourite,
+} from "@/lib/redux/features/favouriteSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
+import { Heart, HeartIcon } from "lucide-react";
 
 type Favourite = {
   url: string;
 };
 
 export const Favourite = ({ url }: Favourite) => {
-  const dispatch = useAppDispatch();
+  const favourites = useAppSelector(
+    (state) => state.favouriteReducer.favourites
+  );
 
-  const handleSaveToFavourite = (url: string) => {
-    dispatch(addToFavourite(url));
+  const dispatch = useAppDispatch();
+  const isFavourite = favourites.includes(url);
+
+  const handleSaveToFavourite = () => {
+    if (isFavourite) {
+      dispatch(removeFromFavourite(url));
+    } else {
+      dispatch(addToFavourite(url));
+    }
   };
 
   return (
     <>
-      <HeartIcon className="cursor-pointer" onClick={() => handleSaveToFavourite(url)} />
+      <HeartIcon
+        fill={isFavourite ? "white" : ""}
+        className="cursor-pointer"
+        onClick={() => handleSaveToFavourite()}
+      />
     </>
   );
 };

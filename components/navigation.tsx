@@ -4,7 +4,7 @@ import Image from "next/image";
 import { updateCategory } from "@/lib/redux/features/categorySlice";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import { ModeToggle } from "./switcher";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { DataTypeObject, SWADataTypes } from "@/lib/types";
 
@@ -12,6 +12,8 @@ export const Navigation = () => {
   const category = useAppSelector((state) => state.categoryReducer.value);
   const dispatch = useAppDispatch();
   const route = useRouter();
+
+  const pathName = usePathname();
 
   const handleRoute = () => {
     route.push("/");
@@ -33,7 +35,7 @@ export const Navigation = () => {
       <div className="flex gap-3">
         {SWADataTypes.map((item: DataTypeObject) => {
           const getSelected = () =>
-            category === item.id ? "default" : "ghost";
+            category === item.id && pathName === "/" ? "default" : "ghost";
           return (
             <Button
               key={item.id}
@@ -46,7 +48,10 @@ export const Navigation = () => {
             </Button>
           );
         })}
-        <Button onClick={() => route.push("/favourite")} variant="ghost">
+        <Button
+          onClick={() => route.push("/favourite")}
+          variant={pathName === "/favourite" ? "default" : "ghost"}
+        >
           <span>Favourites</span>
         </Button>
       </div>
