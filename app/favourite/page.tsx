@@ -21,7 +21,7 @@ export default function Page() {
           data={data}
           error={error}
           title={"Result"}
-          total={0}
+          total={data?.results.length ?? 0}
         />
       </div>
     </main>
