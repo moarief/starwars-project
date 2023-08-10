@@ -15,8 +15,8 @@ export const Navigation = () => {
 
   const pathName = usePathname();
 
-  const handleRoute = () => {
-    route.push("/");
+  const handleRoute = (category: string) => {
+    route.push(`/${category}`);
   };
 
   return (
@@ -40,7 +40,7 @@ export const Navigation = () => {
             <Button
               key={item.id}
               onClick={() => {
-                handleRoute(), dispatch(updateCategory(item.id));
+                handleRoute(item.id), dispatch(updateCategory(item.id));
               }}
               variant={getSelected()}
             >

@@ -36,3 +36,10 @@ export const DataSchema = z.object({
 });
 
 export type Data = z.infer<typeof DataSchema>;
+
+
+export enum CategoryType {
+  FILMS = "film",
+  PEOPLE = "people",
+  SPECIES = "species" 
+}
