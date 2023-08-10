@@ -9,8 +9,12 @@ import { Film } from "@/lib/types/film";
 import { Person } from "@/lib/types/person";
 import { Specie } from "@/lib/types/specie";
 import { Favourite } from "./favourite";
+import { CategoryType } from "@/lib/types";
 
-type Props = Film | Person | Specie;
+type Props = {
+  data: Film | Person | Specie;
+  category: CategoryType;
+}
 
 export const ItemCard = (item: Props) => {
   if ("title" in item) {
