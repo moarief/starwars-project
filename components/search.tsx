@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -28,14 +28,17 @@ import { updateCategory } from "@/lib/redux/features/categorySlice";
 
 const FormSchema = z.object({
   keyword: z.string({ description: "" }).min(2, {
-    message: "Username must be at least 2 characters.",
+    message: "At least 2 characters.",
   }),
   type: z.string(),
 });
 
 export function Search() {
   const dispatch = useAppDispatch();
+  const searchParams = useSearchParams();
+
   const route = useRouter();
+  const pageNumber = searchParams.get("page");
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -47,7 +50,8 @@ export function Search() {
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     dispatch(updateCategory(""));
-    route.push(`/${data.type}?keyword=${data.keyword}`);
+
+    route.push(`/${data.type}?keyword=${data.keyword}&page=${pageNumber}`);
   }
 
   return (
@@ -63,7 +67,10 @@ export function Search() {
             render={({ field }) => (
               <Select onValueChange={field.onChange}>
                 <SelectTrigger className="w-[110px]">
-                  <SelectValue defaultValue={SWADataTypes[0].title} placeholder="Films" />
+                  <SelectValue
+                    defaultValue={SWADataTypes[0].title}
+                    placeholder="Films"
+                  />
                 </SelectTrigger>
                 <SelectContent>
                   {SWADataTypes.map((item: DataTypeObject) => {

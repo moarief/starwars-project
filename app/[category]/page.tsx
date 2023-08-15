@@ -6,7 +6,7 @@ import { TypeQuery, useGetAllQuery } from "@/lib/services/swaApi";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export type PageProps = {
-  params: { id: string };
+  params: { category: string };
 };
 
 export default function Page({ params }: PageProps) {
@@ -14,7 +14,7 @@ export default function Page({ params }: PageProps) {
   const searchParams = useSearchParams();
 
   // Category type
-  const { id } = params;
+  const { category } = params;
 
   // Get current page number
   const pageNumber = searchParams.get("page");
@@ -24,7 +24,7 @@ export default function Page({ params }: PageProps) {
 
   // Query for the SWAPI search
   const query: TypeQuery = {
-    id,
+    category,
     page: pageNumber ? pageNumber : "",
     keyword: searchKeywordParam,
   };
@@ -35,7 +35,7 @@ export default function Page({ params }: PageProps) {
   // Data for the ListItem component
   // TODO:- Could make this as a custom hook!
   const totalAmount = data?.count ? data.count : 0;
-  const title = id.charAt(0).toUpperCase() + id.slice(1);
+  const title = category.charAt(0).toUpperCase() + category.slice(1);
 
   /**
    * Update current page number and set
@@ -45,7 +45,7 @@ export default function Page({ params }: PageProps) {
    */
   const handlePageNumber = (pageNumber: string | null | undefined) => {
     const number = pageNumber?.split("=").pop();
-    route.push(`/${id}?page=${number}`);
+    route.push(`/${category}?page=${number}`);
   };
 
   return (

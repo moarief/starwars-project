@@ -9,14 +9,14 @@ import {
 import { Data, Film, Person, Specie } from "../types";
 
 export type TypeQuery = {
-  id: string;
+  category: string;
   page: string;
   // type: string | null;
   keyword: string | null;
 };
 
 const initQuery: TypeQuery = {
-  id: "films",
+  category: "films",
   page: "",
   // type: null,
   keyword: "",
@@ -41,10 +41,10 @@ export const swaApi = createApi({
   }),
   endpoints: (builder) => ({
     getAll: builder.query<Data, typeof initQuery>({
-      query: ({ id, page, keyword }) => {
-        if (page) {
+      query: ({ category: id, page, keyword }) => {
+        if (page && !keyword) {
           return `${id}?page=${page}`;
-        } else if (keyword) {
+        } else if (keyword && page) {
           return `${id}?search=${keyword}`;
         } else {
           return `${id}`;
@@ -52,7 +52,7 @@ export const swaApi = createApi({
       },
     }),
     getType: builder.query<Data, typeof initQuery>({
-      query: ({ id, page }) => {
+      query: ({ category: id, page }) => {
         if (page) {
           return `${id}?page=${page}`;
         } else {

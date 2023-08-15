@@ -20,7 +20,7 @@ export const List = ({ category }: List) => {
   const [pageNumber, setPageNumber] = useState<PageNumber>();
 
   const { isLoading, isFetching, data, error } = useGetTypeQuery({
-    id: category,
+    category: category,
     page: pageNumber ? pageNumber : "",
   });
 
