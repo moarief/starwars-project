@@ -15,6 +15,11 @@ export const Navigation = () => {
 
   const pathName = usePathname();
 
+  /**
+   * Change route and reset page number to one
+   *
+   * @param {string} category
+   */
   const handleRoute = (category: string) => {
     route.push(`/${category}?page=1`);
   };

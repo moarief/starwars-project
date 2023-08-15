@@ -63,7 +63,7 @@ export function Search() {
             render={({ field }) => (
               <Select onValueChange={field.onChange}>
                 <SelectTrigger className="w-[110px]">
-                  <SelectValue placeholder="Filter" />
+                  <SelectValue defaultValue={SWADataTypes[0].title} placeholder="Films" />
                 </SelectTrigger>
                 <SelectContent>
                   {SWADataTypes.map((item: DataTypeObject) => {
