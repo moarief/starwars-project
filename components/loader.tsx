@@ -3,6 +3,7 @@ import { Skeleton } from "./ui/skeleton";
 export const Loader = () => {
   const elementsArray: JSX.Element[] = [];
 
+  // TODO: Update this method to accept a number, then use that number to generate the skeletons.
   for (let i = 0; i < 10; i++) {
     elementsArray.push(
       <div

@@ -37,7 +37,6 @@ export const ListItem = ({
           </h2>
           <div className="flex flex-wrap justify-between gap-y-5">
             {data &&
-              data.results.length > 0 &&
               data.results.map((item: Film | Person | Specie) => {
                 if ("name" in item) {
                   return <ItemCard key={item.name} {...item} />;

@@ -47,7 +47,7 @@ export function Search() {
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     dispatch(updateCategory(""));
-    route.push(`/${data.keyword}?type=${data.type}`);
+    route.push(`/${data.type}?keyword=${data.keyword}`);
   }
 
   return (

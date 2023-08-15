@@ -8,14 +8,18 @@ import {
 } from "@reduxjs/toolkit/query/react";
 import { Data, Film, Person, Specie } from "../types";
 
-type TypeQuery = {
+export type TypeQuery = {
   id: string;
   page: string;
+  type: string | null;
+  keyword: string | null;
 };
 
 const initQuery: TypeQuery = {
   id: "films",
   page: "",
+  type: null,
+  keyword: "",
 };
 
 type BatchData = {
@@ -36,6 +40,17 @@ export const swaApi = createApi({
     baseUrl: "https://swapi.dev/api/",
   }),
   endpoints: (builder) => ({
+    getAll: builder.query<Data, typeof initQuery>({
+      query: ({ id, page, type, keyword }) => {
+        if (page) {
+          return `${id}?page=${page}`;
+        } else if (keyword) {
+          return `${type}?search=${keyword}`;
+        } else {
+          return `${id}`;
+        }
+      },
+    }),
     getType: builder.query<Data, typeof initQuery>({
       query: ({ id, page }) => {
         if (page) {
@@ -45,7 +60,7 @@ export const swaApi = createApi({
         }
       },
     }),
-    getSearch: builder.query<Data, { type: string | null; keyword: string }>({
+    getSearch: builder.query<Data, { type: string; keyword: string | null }>({
       query: ({ type, keyword }) => `${type}?search=${keyword}`,
     }),
     // Define an endpoint that takes an array of endpoints as an argument
@@ -73,5 +88,9 @@ export const swaApi = createApi({
   }),
 });
 
-export const { useGetTypeQuery, useGetSearchQuery, useBatchFetchQuery } =
-  swaApi;
+export const {
+  useGetTypeQuery,
+  useGetSearchQuery,
+  useBatchFetchQuery,
+  useGetAllQuery,
+} = swaApi;

@@ -17,6 +17,9 @@ type Props = {
 }
 
 export const ItemCard = (item: Props) => {
+
+  
+
   if ("title" in item) {
     const { title, episode_id, director, producer, release_date, url } = item;
     return (
