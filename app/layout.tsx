@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import "./styles/global.css";
 
@@ -11,7 +11,7 @@ import { Navigation } from "@/components/navigation";
 import { Search } from "@/components/search";
 import { FormSchema } from "@/lib/types";
 import { z } from "zod";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -26,12 +26,24 @@ export default function RootLayout({
 }) {
   const route = useRouter();
   const searchParams = useSearchParams();
+  const pathName = usePathname();
 
   const pageNumber = searchParams.get("page");
 
   function onSearchSubmit(data: z.infer<typeof FormSchema>) {
     route.push(`/${data.type}?keyword=${data.keyword}&page=${pageNumber}`);
   }
+
+  const currentPath = pathName.replace("/", "");
+
+  /**
+   * Change route and reset page number to one
+   *
+   * @param {string} category
+   */
+  const handleNavigationChange = (category: string) => {
+    route.push(`/${category}?page=1`);
+  };
 
   return (
     <html lang="en">
@@ -40,7 +52,10 @@ export default function RootLayout({
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <nav className="flex w-full h-20 border-b">
               <div className="max-w-6xl w-full flex flex-wrap items-center justify-between mx-auto py-4">
-                <Navigation />
+                <Navigation
+                  currentPath={currentPath}
+                  handleNavigationChange={handleNavigationChange}
+                />
                 <Search onSearchSubmit={onSearchSubmit} />
               </div>
             </nav>
