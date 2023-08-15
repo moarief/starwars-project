@@ -6,11 +6,21 @@ type PaginationProp = {
   handlePageNumber: (pageNumber: string | null | undefined) => void;
 };
 
+/**
+ * Pagination component
+ *
+ * @param {PaginationProp} {
+  data,
+  totalAmount,
+  handlePageNumber,
+}
+ * @returns {*}
+ */
 const Pagination = ({
   data,
   totalAmount,
   handlePageNumber,
-}: PaginationProp) => {
+}: PaginationProp): JSX.Element => {
   return (
     <>
       {totalAmount >= 10 ? (
