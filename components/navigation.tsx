@@ -6,10 +6,19 @@ type NavigationProps = {
   handleNavigationChange: (category: string) => void;
 };
 
+/**
+ * Navigation component
+ *
+ * @param {NavigationProps} {
+  currentPath,
+  handleNavigationChange,
+}
+ * @returns {*}
+ */
 export const Navigation = ({
   currentPath,
   handleNavigationChange,
-}: NavigationProps) => {
+}: NavigationProps): JSX.Element => {
   return (
     <div className="flex space-x-10 align-middle">
       <Logo imageUrl={"/star-wars-4-logo-svg-vector.svg"} redirectPath={"/"} />
