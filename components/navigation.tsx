@@ -16,7 +16,7 @@ export const Navigation = () => {
   const pathName = usePathname();
 
   const handleRoute = (category: string) => {
-    route.push(`/${category}`);
+    route.push(`/${category}?page=1`);
   };
 
   return (

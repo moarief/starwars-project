@@ -11,14 +11,14 @@ import { Data, Film, Person, Specie } from "../types";
 export type TypeQuery = {
   id: string;
   page: string;
-  type: string | null;
+  // type: string | null;
   keyword: string | null;
 };
 
 const initQuery: TypeQuery = {
   id: "films",
   page: "",
-  type: null,
+  // type: null,
   keyword: "",
 };
 
@@ -41,11 +41,11 @@ export const swaApi = createApi({
   }),
   endpoints: (builder) => ({
     getAll: builder.query<Data, typeof initQuery>({
-      query: ({ id, page, type, keyword }) => {
+      query: ({ id, page, keyword }) => {
         if (page) {
           return `${id}?page=${page}`;
         } else if (keyword) {
-          return `${type}?search=${keyword}`;
+          return `${id}?search=${keyword}`;
         } else {
           return `${id}`;
         }
