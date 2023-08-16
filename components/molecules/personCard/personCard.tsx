@@ -20,7 +20,6 @@ interface PersonCardProps {
  */
 export const PersonCard = ({ person }: PersonCardProps): JSX.Element => {
   const { name, gender, height, hair_color, films, url } = person;
-  console.log("🚀 ~ file: personCard.tsx:23 ~ PersonCard ~ person:", person)
   return (
     <Card className="w-[350px]">
       <CardHeader>

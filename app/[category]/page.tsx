@@ -59,7 +59,6 @@ export default function Page({ params }: PageProps) {
           isFetching={isFetching}
           data={data as Data}
           error={error}
-          category={category}
         />
         <Pagination
           data={data}
