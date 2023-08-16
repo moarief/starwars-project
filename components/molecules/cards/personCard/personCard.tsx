@@ -21,7 +21,7 @@ interface PersonCardProps {
 export const PersonCard = ({ person }: PersonCardProps): JSX.Element => {
   const { name, gender, height, hair_color, films, url } = person;
   return (
-    <Card className="w-[350px]">
+    <Card className="w-[370px]">
       <CardHeader>
         <CardTitle className="flex justify-between gap-2">
           <span>{name}</span>

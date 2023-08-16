@@ -1,6 +1,4 @@
 import {
-  BaseQueryFn,
-  FetchArgs,
   FetchBaseQueryError,
   FetchBaseQueryMeta,
   createApi,
@@ -27,7 +25,7 @@ type BatchData = {
 };
 
 type BaseQueryDataType = {
-  data: Film | Person | Specie;
+  data: BatchData;
   error: FetchBaseQueryError | null;
   meta: FetchBaseQueryMeta;
 };
@@ -51,36 +49,25 @@ export const swaApi = createApi({
         }
       },
     }),
-    getType: builder.query<Data, typeof initQuery>({
-      query: ({ category: id, page }) => {
-        if (page) {
-          return `${id}?page=${page}`;
-        } else {
-          return `${id}`;
-        }
-      },
-    }),
-    getSearch: builder.query<Data, { type: string; keyword: string | null }>({
-      query: ({ type, keyword }) => `${type}?search=${keyword}`,
-    }),
-    // Define an endpoint that takes an array of endpoints as an argument
+    // Define an endpoint that takes an array of endpoints as an argument // baseQuery: (arg: string | FetchArgs)
     batchFetch: builder.query({
       // Use queryFn to write custom logic
       queryFn: async (arg, _queryApi, _extraOptions, baseQuery) => {
         // Assume arg is an array of endpoints, such as ['posts', 'users', 'comments']
         // Create an array of promises for each endpoint
         const promises = arg.map((endpoint: string) => baseQuery(endpoint));
+
         // Wait for all promises to resolve
         const results = await Promise.all(promises);
 
-        const favouriteArray = results.map((result) => {
-          return result.data ? (result.data as Film) : [];
-        });
+        const merged: (Film | Person | Specie)[] = [].concat(
+          ...results.map((result) => result.data)
+        );
 
         // Return the results as an array
         return {
           data: {
-            results: favouriteArray,
+            results: merged,
           },
         };
       },
@@ -88,9 +75,4 @@ export const swaApi = createApi({
   }),
 });
 
-export const {
-  useGetTypeQuery,
-  useGetSearchQuery,
-  useBatchFetchQuery,
-  useGetAllQuery,
-} = swaApi;
+export const { useBatchFetchQuery, useGetAllQuery } = swaApi;

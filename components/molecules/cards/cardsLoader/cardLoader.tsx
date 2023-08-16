@@ -1,14 +1,9 @@
-import { JSX } from "react";
-import { Skeleton } from "./ui/skeleton";
+import { Skeleton } from "../../../ui/skeleton";
 
-type LoaderProps = {
-  total: number;
-};
-
-export const Loader = ({ total }: LoaderProps): JSX.Element => {
+export const CardLoader = (): JSX.Element => {
   const elementsArray: JSX.Element[] = [];
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 9; i++) {
     elementsArray.push(
       <div
         key={i}

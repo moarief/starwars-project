@@ -1,13 +1,13 @@
 import { Film } from "@/lib/types";
 
-import { Favourite } from "../../favourite";
+import { Favourite } from "../../../favourite";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../../ui/card";
+} from "../../../ui/card";
 
 interface FilmCardProps {
   film: Film;
