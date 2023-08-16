@@ -3,7 +3,7 @@ import {
   removeFromFavourite,
 } from "@/lib/redux/features/favouriteSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
-import { Heart, HeartIcon } from "lucide-react";
+import { HeartIcon } from "lucide-react";
 
 type Favourite = {
   url: string;

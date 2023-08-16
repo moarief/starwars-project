@@ -1,5 +1,5 @@
 import { NavigationList, NavigationItem } from "@/lib/types";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 
 type NavigationItemProps = {
   currentPath: string;
@@ -15,7 +15,7 @@ type NavigationItemProps = {
 }
  * @returns {JSX.Element}
  */
-const NavigationItems = ({
+export const NavigationItems = ({
   currentPath,
   handleNavigationChange,
 }: NavigationItemProps): JSX.Element => {
@@ -37,5 +37,3 @@ const NavigationItems = ({
     </div>
   );
 };
-
-export default NavigationItems;

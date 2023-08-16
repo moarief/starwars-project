@@ -1,16 +1,17 @@
-import { Film, Person, Specie } from "@/lib/types";
-
-import { ItemCard } from "./itemCard";
+import { Data, Film, Person, Specie } from "@/lib/types";
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+
 import { Loader } from "./loader";
+import { FilmCard, PersonCard, SpecieCard } from "./molecules";
+
 
 type ListItem = {
   title: string;
   total: number;
   isLoading: boolean;
   isFetching: boolean;
-  data: any; // Data??
+  data: Data;
   error: FetchBaseQueryError | SerializedError | undefined;
 };
 
@@ -38,11 +39,12 @@ export const ListItem = ({
           <div className="flex flex-wrap justify-between gap-y-5">
             {data &&
               data.results.map((item: Film | Person | Specie) => {
-                if ("name" in item) {
-                  return <ItemCard key={item.name} {...item} />;
-                }
                 if ("title" in item) {
-                  return <ItemCard key={item.episode_id} {...item} />;
+                  return <FilmCard key={item.episode_id} film={item} />;
+                } else if ("gender" in item) {
+                  return <PersonCard key={item.name} person={item} />;
+                } else if ("classification" in item) {
+                  return <SpecieCard key={item.name} specie={item} />;
                 }
               })}
           </div>

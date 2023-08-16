@@ -12,7 +12,7 @@ type LogoProps = {
  * @param {LogoProps} { redirectPath, imageUrl }
  * @returns {JSX.Element}
  */
-const Logo = ({ redirectPath, imageUrl }: LogoProps): JSX.Element => {
+export const Logo = ({ redirectPath, imageUrl }: LogoProps): JSX.Element => {
   return (
     <>
       <Link href={redirectPath} prefetch>
@@ -28,5 +28,3 @@ const Logo = ({ redirectPath, imageUrl }: LogoProps): JSX.Element => {
     </>
   );
 };
-
-export default Logo;

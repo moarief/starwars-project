@@ -14,7 +14,7 @@ export type Data = z.infer<typeof DataSchema>;
 
 // TODO: Figure out this shit with an ENUM!!
 export enum CategoryType {
-  FILMS = "film",
+  FILMS = "films",
   PEOPLE = "people",
   SPECIES = "species",
 }

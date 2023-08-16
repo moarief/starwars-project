@@ -37,6 +37,7 @@ export function Search({ onSearchSubmit }: SearchProps) {
     },
   });
 
+  // TODO: Fix message for input field
   return (
     <Form {...form}>
       <form

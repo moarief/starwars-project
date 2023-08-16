@@ -3,6 +3,7 @@
 import { ListItem } from "@/components/listItem";
 import Pagination from "@/components/pagination";
 import { TypeQuery, useGetAllQuery } from "@/lib/services/swaApi";
+import { Data } from "@/lib/types";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export type PageProps = {
@@ -56,8 +57,9 @@ export default function Page({ params }: PageProps) {
           total={totalAmount}
           isLoading={isLoading}
           isFetching={isFetching}
-          data={data}
+          data={data as Data}
           error={error}
+          category={category}
         />
         <Pagination
           data={data}
