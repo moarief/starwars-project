@@ -9,6 +9,13 @@ type Favourite = {
   url: string;
 };
 
+
+/**
+ * Favourite component
+ *
+ * @param {Favourite} { url }
+ * @returns {*}
+ */
 export const Favourite = ({ url }: Favourite) => {
   const favourites = useAppSelector(
     (state) => state.favouriteReducer.favourites
@@ -17,13 +24,10 @@ export const Favourite = ({ url }: Favourite) => {
   const dispatch = useAppDispatch();
   const isFavourite = favourites.includes(url);
 
-  const handleSaveToFavourite = () => {
-    if (isFavourite) {
-      dispatch(removeFromFavourite(url));
-    } else {
-      dispatch(addToFavourite(url));
-    }
-  };
+  const handleSaveToFavourite = () =>
+    isFavourite
+      ? dispatch(removeFromFavourite(url))
+      : dispatch(addToFavourite(url));
 
   return (
     <>
