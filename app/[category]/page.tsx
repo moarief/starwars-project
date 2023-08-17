@@ -1,7 +1,6 @@
 "use client";
 
-import { ListItem } from "@/components/listItem";
-import Pagination from "@/components/pagination";
+import { CardList, Pagination } from "@/components/organisms";
 import { TypeQuery, useGetAllQuery } from "@/lib/services/swaApi";
 import { Data } from "@/lib/types";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -34,7 +33,6 @@ export default function Page({ params }: PageProps) {
   const { isLoading, isFetching, data, error } = useGetAllQuery(query);
 
   // Data for the ListItem component
-  // TODO:- Could make this as a custom hook!
   const totalAmount = data?.count ? data.count : 0;
   const title = category.charAt(0).toUpperCase() + category.slice(1);
 
@@ -52,7 +50,7 @@ export default function Page({ params }: PageProps) {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between pt-16">
       <div className="flex flex-col space-y-10 w-full max-w-6xl items-center justify-between font-mono text-sm lg:flex">
-        <ListItem
+        <CardList
           title={title}
           total={totalAmount}
           isLoading={isLoading}

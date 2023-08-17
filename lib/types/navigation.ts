@@ -7,12 +7,7 @@ export const NavigationItemSchema = z.object({
 
 export type NavigationItem = z.infer<typeof NavigationItemSchema>;
 
-export const NavigationSchema = z.tuple([
-  NavigationItemSchema,
-  NavigationItemSchema,
-  NavigationItemSchema,
-  NavigationItemSchema,
-]);
+export const NavigationSchema = z.array(NavigationItemSchema);
 export type Navigation = z.infer<typeof NavigationSchema>;
 
 export const NavigationList: Navigation = [
@@ -30,6 +25,6 @@ export const NavigationList: Navigation = [
   },
   {
     id: "favourite",
-    title: "Favourite",
+    title: "Favourites",
   },
 ];

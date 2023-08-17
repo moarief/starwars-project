@@ -1,19 +1,18 @@
 "use client";
 
-import './styles/global.css';
+import "./styles/global.css";
 
-import { Inter } from 'next/font/google';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { z } from 'zod';
+import { Inter } from "next/font/google";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { z } from "zod";
 
-import { Navigation } from '@/components/navigation';
-import { Search } from '@/components/search';
-import { ThemeProvider } from '@/components/theme-provider';
-import { FormSchema } from '@/lib/types';
+import { ThemeProvider } from "@/components/theme-provider";
+import { FormSchema } from "@/lib/types";
 
-import Providers from './provider';
+import Providers from "./provider";
 
 import type { Metadata } from "next";
+import { Navigation, Search } from "@/components/organisms";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {

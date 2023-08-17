@@ -53,14 +53,18 @@ export function Search({ onSearchSubmit }: SearchProps) {
               <Select onValueChange={field.onChange}>
                 <SelectTrigger className="w-[110px]">
                   <SelectValue
-                    defaultValue={NavigationList[0].title}
+                    defaultValue={NavigationList[0]?.title}
                     placeholder="Films"
                   />
                 </SelectTrigger>
                 <SelectContent>
-                  {NavigationList.map((item: NavigationItem) => {
+                  {NavigationList.slice(0, -1).map((item: NavigationItem) => {
                     return (
-                      <SelectItem key={item.id} value={item.id}>
+                      <SelectItem
+                        data-testid="search-filter"
+                        key={item.id}
+                        value={item.id}
+                      >
                         {item.title}
                       </SelectItem>
                     );

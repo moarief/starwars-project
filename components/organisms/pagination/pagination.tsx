@@ -16,7 +16,7 @@ type PaginationProp = {
 }
  * @returns {*}
  */
-const Pagination = ({
+export const Pagination = ({
   data,
   totalAmount,
   handlePageNumber,
@@ -46,5 +46,3 @@ const Pagination = ({
     </>
   );
 };
-
-export default Pagination;

@@ -1,24 +1,24 @@
 "use client";
 
-import { ListItem } from "@/components/listItem";
+import { CardList } from "@/components/organisms";
 import { useAppSelector } from "@/lib/redux/hooks";
 import { useBatchFetchQuery } from "@/lib/services/swaApi";
+import { Data } from "@/lib/types";
 
 export default function Page() {
   const favourites = useAppSelector(
     (state) => state.favouriteReducer.favourites
   );
 
-  const { isLoading, isFetching, data, error, isSuccess } =
-    useBatchFetchQuery(favourites);
+  const { isLoading, isFetching, data, error } = useBatchFetchQuery(favourites);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between pt-16">
       <div className="flex flex-col space-y-10 w-full max-w-6xl justify-between font-mono text-sm lg:flex">
-        <ListItem
+        <CardList
           isLoading={isLoading}
           isFetching={isFetching}
-          data={data}
+          data={data as Data}
           error={error}
           title={"Result"}
           total={data?.results.length ?? 0}
