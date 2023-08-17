@@ -1,4 +1,4 @@
-import { Favourite } from "@/components/favourite";
+import { Favourite } from "@/components/organisms/favourite/favourite";
 import {
   Card,
   CardHeader,

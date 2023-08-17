@@ -1,22 +1,21 @@
 import {
-  FetchBaseQueryError,
-  FetchBaseQueryMeta,
   createApi,
   fetchBaseQuery,
+  FetchBaseQueryError,
+  FetchBaseQueryMeta,
 } from "@reduxjs/toolkit/query/react";
+
 import { Data, Film, Person, Specie } from "../types";
 
 export type TypeQuery = {
   category: string;
   page: string;
-  // type: string | null;
   keyword: string | null;
 };
 
 const initQuery: TypeQuery = {
   category: "films",
   page: "",
-  // type: null,
   keyword: "",
 };
 

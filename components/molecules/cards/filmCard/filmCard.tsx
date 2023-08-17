@@ -1,6 +1,6 @@
 import { Film } from "@/lib/types";
 
-import { Favourite } from "../../../favourite";
+import { Favourite } from "../../../organisms/favourite/favourite";
 import {
   Card,
   CardContent,

@@ -14,15 +14,16 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SearchIcon } from "lucide-react";
 import { clsx } from "clsx";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "./ui/select";
+
 import { NavigationItem, NavigationList } from "@/lib/types";
 import { FormSchema } from "@/lib/types";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type SearchProps = {
   onSearchSubmit: (data: z.infer<typeof FormSchema>) => void;

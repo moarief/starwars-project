@@ -1,4 +1,4 @@
-import { Logo, NavigationItems } from "./molecules";
+import { Logo, NavigationItems } from "@/components/molecules";
 
 type NavigationProps = {
   currentPath: string;

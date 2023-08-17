@@ -1,14 +1,7 @@
-import { Data, Film, Person, Specie } from "@/lib/types";
-import { SerializedError } from "@reduxjs/toolkit";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-
-import {
-  CardLoader,
-  FilmCard,
-  Header,
-  PersonCard,
-  SpecieCard,
-} from "./molecules";
+import { CardLoader, FilmCard, Header, PersonCard, SpecieCard } from '@/components/molecules';
+import { Data, Film, Person, Specie } from '@/lib/types';
+import { SerializedError } from '@reduxjs/toolkit';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 
 type ListItemProps = {
   title: string;
@@ -32,7 +25,7 @@ type ListItemProps = {
 }
  * @returns {JSX.Element}
  */
-export const ListItem = ({
+export const CardList = ({
   title,
   total,
   error,
