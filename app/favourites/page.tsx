@@ -1,16 +1,10 @@
 "use client";
 
 import { CardList } from "@/components/organisms";
-import { useAppSelector } from "@/lib/redux/hooks";
-import { useBatchFetchQuery } from "@/lib/services/swaApi";
-import { Data } from "@/lib/types";
+import { useGetFavourite } from "@/hooks/useFavourite";
 
 export default function Page() {
-  const favourites = useAppSelector(
-    (state) => state.favouriteReducer.favourites
-  );
-
-  const { isLoading, isFetching, data, error } = useBatchFetchQuery(favourites);
+  const { isLoading, data, isFetching } = useGetFavourite();
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between pt-16">
@@ -18,10 +12,9 @@ export default function Page() {
         <CardList
           isLoading={isLoading}
           isFetching={isFetching}
-          data={data as Data}
-          error={error}
+          favData={data}
           title={"Result"}
-          total={data?.results.length ?? 0}
+          total={data.length ?? 0}
         />
       </div>
     </main>

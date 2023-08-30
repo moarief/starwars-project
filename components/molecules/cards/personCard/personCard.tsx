@@ -25,7 +25,7 @@ export const PersonCard = ({ person }: PersonCardProps): JSX.Element => {
       <CardHeader>
         <CardTitle className="flex justify-between gap-2">
           <span>{name}</span>
-          <Favourite url={url} />
+          <Favourite item={person} url={url} />
         </CardTitle>
         <CardDescription>
           <span>In episode </span>

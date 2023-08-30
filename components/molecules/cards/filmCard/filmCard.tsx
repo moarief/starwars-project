@@ -26,7 +26,7 @@ export const FilmCard = ({ film }: FilmCardProps): JSX.Element => {
       <CardHeader>
         <CardTitle className="flex justify-between gap-2">
           <span>{title}</span>
-          <Favourite url={url} />
+          <Favourite item={film} url={url} />
         </CardTitle>
         <CardDescription>{`Episode ${episode_id}`}</CardDescription>
       </CardHeader>

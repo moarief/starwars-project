@@ -24,7 +24,7 @@ export const NavigationList: Navigation = [
     title: "Species",
   },
   {
-    id: "favourite",
-    title: "Favourites",
+    id: "favourites",
+    title: "Favouritess",
   },
 ];
