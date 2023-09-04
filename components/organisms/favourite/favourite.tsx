@@ -18,9 +18,10 @@ type Favourite = {
 export const Favourite = ({ url, item }: Favourite): JSX.Element => {
   const [isFavourite, setisFavourite] = useState<boolean>(false);
 
-  const { isLoading, data, isFetching } = useGetFavourite();
+  // TODO: NEED to move this fetching on page level and pass it down, this causes to many API calls!!
+  // const { isLoading, data, isFetching } = useGetFavourite();
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (!isLoading && !isFetching && data) {
       const exists = data.find(
         (el: Film | Person | Specie) => item.url === el.url
@@ -28,7 +29,7 @@ export const Favourite = ({ url, item }: Favourite): JSX.Element => {
 
       exists ? setisFavourite(true) : setisFavourite(false);
     }
-  }, [data, isLoading, isFetching, item]);
+  }, [data, isLoading, isFetching, item]); */
 
   const handleUpdateFavourite = async () => {
     if (isFavourite) {

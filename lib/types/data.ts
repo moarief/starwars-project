@@ -11,3 +11,9 @@ export const DataSchema = z.object({
 });
 
 export type Data = z.infer<typeof DataSchema>;
+
+export enum DataTypes {
+  FILM = "film",
+  PERSON = "person",
+  SPECIE = "specie",
+}

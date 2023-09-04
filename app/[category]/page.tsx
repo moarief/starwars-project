@@ -1,6 +1,7 @@
 "use client";
 
 import { CardList, Pagination } from "@/components/organisms";
+import { useGetFavourite } from "@/hooks/useFavourite";
 import { TypeQuery, useGetAllQuery } from "@/lib/services/swaApi";
 import { Data } from "@/lib/types";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -31,6 +32,10 @@ export default function Page({ params }: PageProps) {
 
   // Get data
   const { isLoading, isFetching, data, error } = useGetAllQuery(query);
+
+  // Get favourites
+  // TODO: Move this to context instead of prop drilling or redux, then fetch it inside the favourite component
+  const favouritesResponse = useGetFavourite();
 
   // Data for the ListItem component
   const totalAmount = data?.count ? data.count : 0;

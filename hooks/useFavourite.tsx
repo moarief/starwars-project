@@ -2,12 +2,14 @@ import { redisClient } from "@/lib/services/redis";
 import { Film, Person, Specie } from "@/lib/types";
 import { useEffect, useState } from "react";
 
+export type GetFavourites = {
+  data: (Film | Person | Specie)[];
+  isLoading: boolean;
+  isFetching: boolean;
+};
+
 export const useGetFavourite = () => {
-  const [favourites, setFavourites] = useState<{
-    data: (Film | Person | Specie)[];
-    isLoading: boolean;
-    isFetching: boolean;
-  }>({
+  const [favourites, setFavourites] = useState<GetFavourites>({
     data: [],
     isLoading: true,
     isFetching: true,

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { Data } from "../types";
+import { Data, Film, Person, Specie } from "../types";
 
 export type TypeQuery = {
   category: string;
@@ -31,6 +31,22 @@ export const swaApi = createApi({
         } else {
           return `${id}`;
         }
+      },
+      transformResponse: (response: Data) => {
+        const newResults = response.results.map(
+          (item: Film | Person | Specie) => {
+            if ("title" in item) {
+              return Object.assign(item, { _type: "film" });
+            } else if ("gender" in item) {
+              return Object.assign(item, { _type: "person" });
+            } else if ("classification" in item) {
+              return Object.assign(item, { _type: "specie" });
+            }
+          }
+        );
+
+        const newResponse = Object.assign(response, { results: newResults });
+        return newResponse;
       },
     }),
   }),
