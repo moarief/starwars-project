@@ -10,6 +10,7 @@ import { Person } from "@/lib/types";
 
 interface PersonCardProps {
   person: Person;
+  isFav: boolean;
 }
 
 /**
@@ -18,14 +19,14 @@ interface PersonCardProps {
  * @param {PersonCardProps} { person }
  * @returns {JSX.Element}
  */
-export const PersonCard = ({ person }: PersonCardProps): JSX.Element => {
+export const PersonCard = ({ person, isFav }: PersonCardProps): JSX.Element => {
   const { name, gender, height, hair_color, films, url } = person;
   return (
     <Card className="w-[370px]">
       <CardHeader>
         <CardTitle className="flex justify-between gap-2">
           <span>{name}</span>
-          <Favourite item={person} url={url} />
+          <Favourite item={person} url={url} isFav={isFav} />
         </CardTitle>
         <CardDescription>
           <span>In episode </span>

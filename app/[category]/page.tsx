@@ -6,11 +6,17 @@ import { TypeQuery, useGetAllQuery } from "@/lib/services/swaApi";
 import { Data } from "@/lib/types";
 import { useRouter, useSearchParams } from "next/navigation";
 
+import { useAppSelector } from "@/lib/redux/hooks";
+
 export type PageProps = {
   params: { category: string };
 };
 
 export default function Page({ params }: PageProps) {
+  const favouritess = useAppSelector(
+    (state) => state.favouriteReducer.favourites
+  );
+
   const route = useRouter();
   const searchParams = useSearchParams();
 
@@ -34,8 +40,7 @@ export default function Page({ params }: PageProps) {
   const { isLoading, isFetching, data, error } = useGetAllQuery(query);
 
   // Get favourites
-  // TODO: Move this to context instead of prop drilling or redux, then fetch it inside the favourite component
-  const favouritesResponse = useGetFavourite();
+  const { favourites, handleUpdateFavourite } = useGetFavourite(favouritess);
 
   // Data for the ListItem component
   const totalAmount = data?.count ? data.count : 0;
@@ -62,6 +67,8 @@ export default function Page({ params }: PageProps) {
           isFetching={isFetching}
           data={data as Data}
           error={error}
+          favData={favourites}
+          handleUpdateFavourite={handleUpdateFavourite}
         />
         <Pagination
           data={data}

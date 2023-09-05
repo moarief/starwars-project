@@ -2,9 +2,14 @@
 
 import { CardList } from "@/components/organisms";
 import { useGetFavourite } from "@/hooks/useFavourite";
+import { useAppSelector } from "@/lib/redux/hooks";
 
 export default function Page() {
-  const { isLoading, data, isFetching } = useGetFavourite();
+  const favouritess = useAppSelector(
+    (state) => state.favouriteReducer.favourites
+  );
+  const { favourites, isLoading, data, isFetching, handleUpdateFavourite } =
+    useGetFavourite(favouritess);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between pt-16">
@@ -12,9 +17,10 @@ export default function Page() {
         <CardList
           isLoading={isLoading}
           isFetching={isFetching}
-          favData={data}
+          favData={favourites}
           title={"Result"}
           total={data.length ?? 0}
+          handleUpdateFavourite={handleUpdateFavourite}
         />
       </div>
     </main>

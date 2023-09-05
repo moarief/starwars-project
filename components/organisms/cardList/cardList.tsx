@@ -5,6 +5,7 @@ import {
   PersonCard,
   SpecieCard,
 } from "@/components/molecules";
+import { GetFavourites } from "@/hooks/useFavourite";
 import { Data, DataTypes, Film, Person, Specie } from "@/lib/types";
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
@@ -15,8 +16,12 @@ type ListItemProps = {
   isLoading: boolean;
   isFetching: boolean;
   data?: Data;
-  favData?: (Film | Person | Specie)[];
+  favData: GetFavourites;
   error?: FetchBaseQueryError | SerializedError | undefined;
+  handleUpdateFavourite: (
+    item: Film | Person | Specie,
+    isFavourite: boolean
+  ) => Promise<void>;
 };
 
 /**
@@ -40,6 +45,7 @@ export const CardList = ({
   data,
   favData,
   isFetching,
+  handleUpdateFavourite,
 }: ListItemProps): JSX.Element => {
   // TODO: Update error handling with a better message
   if (error) {
@@ -55,7 +61,13 @@ export const CardList = ({
       <div className="space-y-10 w-full">
         <Header total={total} title={title} />
         <div className="flex flex-wrap flex-row justify-between gap-y-5">
-          {data.results ? <List list={data.results} /> : null}
+          {data.results ? (
+            <List
+              list={data.results}
+              favourites={favData}
+              handleUpdateFavourite={handleUpdateFavourite}
+            />
+          ) : null}
         </div>
       </div>
     );
@@ -65,7 +77,13 @@ export const CardList = ({
     <div className="space-y-10 w-full">
       <Header total={total} title={title} />
       <div className="flex flex-wrap flex-row justify-between gap-y-5">
-        {favData ? <List list={favData} /> : null}
+        {favData ? (
+          <List
+            list={favData.data}
+            favourites={favData}
+            handleUpdateFavourite={handleUpdateFavourite}
+          />
+        ) : null}
       </div>
     </div>
   );
@@ -73,23 +91,50 @@ export const CardList = ({
 
 type ListProps = {
   list: (Film | Person | Specie)[];
+  favourites: GetFavourites;
+  handleUpdateFavourite: (
+    item: Film | Person | Specie,
+    isFavourite: boolean
+  ) => Promise<void>;
 };
 
-const List = ({ list }: ListProps) => {
+const List = ({ list, favourites, handleUpdateFavourite }: ListProps) => {
+  const { isLoading, isFetching, data } = favourites;
   return (
     <>
       {list.map((item: Film | Person | Specie) => {
+        let exists;
+
+        if (!isLoading && !isFetching && data) {
+          exists = data.find(
+            (el: Film | Person | Specie) => item.url === el.url
+          );
+        }
+
         if ((item as Film) && item._type === DataTypes.FILM) {
           return (
-            <FilmCard key={(item as Film).episode_id} film={item as Film} />
+            <FilmCard
+              key={(item as Film).episode_id}
+              film={item as Film}
+              isFav={exists ? true : false}
+              handleUpdateFavourite={handleUpdateFavourite}
+            />
           );
         } else if ((item as Person) && item._type === DataTypes.PERSON) {
           return (
-            <PersonCard key={(item as Person).name} person={item as Person} />
+            <PersonCard
+              key={(item as Person).name}
+              person={item as Person}
+              isFav={exists ? true : false}
+            />
           );
         } else if ((item as Specie) && item._type === DataTypes.SPECIE) {
           return (
-            <SpecieCard key={(item as Specie).name} specie={item as Specie} />
+            <SpecieCard
+              key={(item as Specie).name}
+              specie={item as Specie}
+              isFav={exists ? true : false}
+            />
           );
         }
       })}

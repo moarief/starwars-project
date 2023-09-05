@@ -1,4 +1,4 @@
-import { Film } from "@/lib/types";
+import { Film, Person, Specie } from "@/lib/types";
 
 import { Favourite } from "../../../organisms/favourite/favourite";
 import {
@@ -11,6 +11,11 @@ import {
 
 interface FilmCardProps {
   film: Film;
+  isFav: boolean;
+  handleUpdateFavourite: (
+    item: Film | Person | Specie,
+    isFavourite: boolean
+  ) => Promise<void>;
 }
 
 /**
@@ -19,14 +24,23 @@ interface FilmCardProps {
  * @param {FilmCardProps} { film }
  * @returns {JSX.Element}
  */
-export const FilmCard = ({ film }: FilmCardProps): JSX.Element => {
+export const FilmCard = ({
+  film,
+  isFav,
+  handleUpdateFavourite,
+}: FilmCardProps): JSX.Element => {
   const { title, episode_id, director, producer, release_date, url } = film;
   return (
     <Card className="w-[370px]">
       <CardHeader>
         <CardTitle className="flex justify-between gap-2">
           <span>{title}</span>
-          <Favourite item={film} url={url} />
+          <Favourite
+            item={film}
+            url={url}
+            isFav={isFav}
+            handleUpdateFavourite={handleUpdateFavourite}
+          />
         </CardTitle>
         <CardDescription>{`Episode ${episode_id}`}</CardDescription>
       </CardHeader>
