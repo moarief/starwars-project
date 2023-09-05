@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -15,28 +14,22 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SearchIcon } from "lucide-react";
 import { clsx } from "clsx";
+
+import { NavigationItem, NavigationList } from "@/lib/types";
+import { FormSchema } from "@/lib/types";
 import {
   Select,
-  SelectTrigger,
-  SelectValue,
   SelectContent,
   SelectItem,
-} from "./ui/select";
-import { DataTypeObject, SWADataTypes } from "@/lib/types";
-import { useAppDispatch } from "@/lib/redux/hooks";
-import { updateCategory } from "@/lib/redux/features/categorySlice";
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-const FormSchema = z.object({
-  keyword: z.string({ description: "" }).min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  type: z.string(),
-});
+type SearchProps = {
+  onSearchSubmit: (data: z.infer<typeof FormSchema>) => void;
+};
 
-export function Search() {
-  const dispatch = useAppDispatch();
-  const route = useRouter();
-
+export function Search({ onSearchSubmit }: SearchProps) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -45,15 +38,11 @@ export function Search() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    dispatch(updateCategory(""));
-    route.push(`/${data.keyword}?type=${data.type}`);
-  }
-
+  // TODO: Fix message for input field
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(onSearchSubmit)}
         className="flex w-fit space-y-6"
       >
         <div className="flex w-full max-w-lx items-center space-x-2">
@@ -63,12 +52,19 @@ export function Search() {
             render={({ field }) => (
               <Select onValueChange={field.onChange}>
                 <SelectTrigger className="w-[110px]">
-                  <SelectValue placeholder="Filter" />
+                  <SelectValue
+                    defaultValue={NavigationList[0]?.title}
+                    placeholder="Films"
+                  />
                 </SelectTrigger>
                 <SelectContent>
-                  {SWADataTypes.map((item: DataTypeObject) => {
+                  {NavigationList.slice(0, -1).map((item: NavigationItem) => {
                     return (
-                      <SelectItem key={item.id} value={item.id}>
+                      <SelectItem
+                        data-testid="search-filter"
+                        key={item.id}
+                        value={item.id}
+                      >
                         {item.title}
                       </SelectItem>
                     );

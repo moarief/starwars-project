@@ -1,7 +1,9 @@
-import { cleanEnv, str } from "envalid";
+import { cleanEnv, host, str, url } from "envalid";
 
-const envVariables = cleanEnv(process.env, {
-	SWA_API: str(),
+const env = cleanEnv(process.env, {
+  NEXT_PUBLIC_SWA_API: str(),
+  NEXT_PUBLIC_REDIS: str(),
+  NEXT_PUBLIC_REDIS_TOKEN: str(),
 });
 
-export default envVariables;
+export default env;

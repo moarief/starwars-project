@@ -1,6 +1,7 @@
 import * as z from "zod";
 
 export const PersonSchema = z.object({
+  _type: z.string(),
   name: z.string(),
   height: z.string(),
   mass: z.string(),

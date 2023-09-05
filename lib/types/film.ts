@@ -1,6 +1,7 @@
 import * as z from "zod";
 
 export const FilmSchema = z.object({
+  _type: z.string(),
   title: z.string(),
   episode_id: z.number(),
   director: z.string(),

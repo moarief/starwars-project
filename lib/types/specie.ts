@@ -1,6 +1,7 @@
 import * as z from "zod";
 
 export const SpecieSchema = z.object({
+  _type: z.string(),
   name: z.string(),
   hair_color: z.string(),
   skin_color: z.string(),
