@@ -1,20 +1,11 @@
-import { Favourite } from "@/components/organisms/favourite/favourite";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Film, Person, Specie } from "@/lib/types";
+import { Favourite } from '@/components/organisms/favourite/favourite';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Person } from '@/lib/types';
 
-export interface PersonCardProps {
+import { CardProps } from '../types';
+
+export interface PersonCardProps extends CardProps {
   item: Person;
-  isFav: boolean;
-  handleUpdateFavourite: (
-    item: Film | Person | Specie,
-    isFavourite: boolean
-  ) => Promise<void>;
 }
 
 /**

@@ -1,4 +1,5 @@
-import { Film, Person, Specie } from "@/lib/types";
+import { Film } from "@/lib/types";
+import { CardProps } from "../types";
 
 import { Favourite } from "../../../organisms/favourite/favourite";
 import {
@@ -9,13 +10,8 @@ import {
   CardTitle,
 } from "../../../ui/card";
 
-export interface FilmCardProps {
+export interface FilmCardProps extends CardProps {
   item: Film;
-  isFav: boolean;
-  handleUpdateFavourite: (
-    item: Film | Person | Specie,
-    isFavourite: boolean
-  ) => Promise<void>;
 }
 
 /**
