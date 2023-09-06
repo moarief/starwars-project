@@ -1,12 +1,15 @@
 import {
   CardLoader,
   FilmCard,
+  FilmCardProps,
   Header,
   PersonCard,
+  PersonCardProps,
   SpecieCard,
+  SpecieCardProps,
 } from "@/components/molecules";
 import { GetFavourites } from "@/hooks/useFavourite";
-import { Data, DataTypes, Film, Person, Specie } from "@/lib/types";
+import { Data, Film, Person, Specie } from "@/lib/types";
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 
@@ -98,6 +101,22 @@ type ListProps = {
   ) => Promise<void>;
 };
 
+interface Views {
+  film: ({ item, isFav, handleUpdateFavourite }: FilmCardProps) => JSX.Element;
+  person: ({
+    item,
+    isFav,
+    handleUpdateFavourite,
+  }: PersonCardProps) => JSX.Element;
+  specie: ({ item, isFav }: SpecieCardProps) => JSX.Element;
+}
+
+const views: Views = {
+  film: FilmCard,
+  person: PersonCard,
+  specie: SpecieCard,
+};
+
 const List = ({ list, favourites, handleUpdateFavourite }: ListProps) => {
   const { isLoading, isFetching, data } = favourites;
   return (
@@ -105,38 +124,25 @@ const List = ({ list, favourites, handleUpdateFavourite }: ListProps) => {
       {list.map((item: Film | Person | Specie) => {
         let exists;
 
+        const CurrentView = views[item._type as keyof Views];
+
         if (!isLoading && !isFetching && data) {
           exists = data.find(
             (el: Film | Person | Specie) => item.url === el.url
           );
         }
 
-        if ((item as Film) && item._type === DataTypes.FILM) {
-          return (
-            <FilmCard
-              key={(item as Film).episode_id}
-              film={item as Film}
-              isFav={exists ? true : false}
-              handleUpdateFavourite={handleUpdateFavourite}
-            />
-          );
-        } else if ((item as Person) && item._type === DataTypes.PERSON) {
-          return (
-            <PersonCard
-              key={(item as Person).name}
-              person={item as Person}
-              isFav={exists ? true : false}
-            />
-          );
-        } else if ((item as Specie) && item._type === DataTypes.SPECIE) {
-          return (
-            <SpecieCard
-              key={(item as Specie).name}
-              specie={item as Specie}
-              isFav={exists ? true : false}
-            />
-          );
-        }
+        return (
+          <div key={item.url}>
+            {CurrentView && (
+              <CurrentView
+                item={item as any}
+                isFav={exists !== undefined}
+                handleUpdateFavourite={handleUpdateFavourite}
+              />
+            )}
+          </div>
+        );
       })}
     </>
   );

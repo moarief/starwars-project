@@ -17,3 +17,5 @@ export enum DataTypes {
   PERSON = "person",
   SPECIE = "specie",
 }
+
+

@@ -5,6 +5,8 @@ import { useGetFavourite } from "@/hooks/useFavourite";
 import { useAppSelector } from "@/lib/redux/hooks";
 
 export default function Page() {
+  // TODO: Maybe use context instead of redux for this
+
   const favouritess = useAppSelector(
     (state) => state.favouriteReducer.favourites
   );

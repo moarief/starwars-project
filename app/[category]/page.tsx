@@ -13,6 +13,8 @@ export type PageProps = {
 };
 
 export default function Page({ params }: PageProps) {
+  // TODO: Maybe use context instead of redux for this
+
   const favouritess = useAppSelector(
     (state) => state.favouriteReducer.favourites
   );

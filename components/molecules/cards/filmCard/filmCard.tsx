@@ -9,8 +9,8 @@ import {
   CardTitle,
 } from "../../../ui/card";
 
-interface FilmCardProps {
-  film: Film;
+export interface FilmCardProps {
+  item: Film;
   isFav: boolean;
   handleUpdateFavourite: (
     item: Film | Person | Specie,
@@ -25,18 +25,18 @@ interface FilmCardProps {
  * @returns {JSX.Element}
  */
 export const FilmCard = ({
-  film,
+  item,
   isFav,
   handleUpdateFavourite,
 }: FilmCardProps): JSX.Element => {
-  const { title, episode_id, director, producer, release_date, url } = film;
+  const { title, episode_id, director, producer, release_date, url } = item;
   return (
     <Card className="w-[370px]">
       <CardHeader>
         <CardTitle className="flex justify-between gap-2">
           <span>{title}</span>
           <Favourite
-            item={film}
+            item={item}
             url={url}
             isFav={isFav}
             handleUpdateFavourite={handleUpdateFavourite}

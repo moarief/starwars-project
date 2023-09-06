@@ -6,11 +6,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Person } from "@/lib/types";
+import { Film, Person, Specie } from "@/lib/types";
 
-interface PersonCardProps {
-  person: Person;
+export interface PersonCardProps {
+  item: Person;
   isFav: boolean;
+  handleUpdateFavourite: (
+    item: Film | Person | Specie,
+    isFavourite: boolean
+  ) => Promise<void>;
 }
 
 /**
@@ -19,14 +23,23 @@ interface PersonCardProps {
  * @param {PersonCardProps} { person }
  * @returns {JSX.Element}
  */
-export const PersonCard = ({ person, isFav }: PersonCardProps): JSX.Element => {
-  const { name, gender, height, hair_color, films, url } = person;
+export const PersonCard = ({
+  item,
+  isFav,
+  handleUpdateFavourite,
+}: PersonCardProps): JSX.Element => {
+  const { name, gender, height, hair_color, films, url } = item;
   return (
     <Card className="w-[370px]">
       <CardHeader>
         <CardTitle className="flex justify-between gap-2">
           <span>{name}</span>
-          <Favourite item={person} url={url} isFav={isFav} />
+          <Favourite
+            item={item}
+            url={url}
+            isFav={isFav}
+            handleUpdateFavourite={handleUpdateFavourite}
+          />
         </CardTitle>
         <CardDescription>
           <span>In episode </span>
